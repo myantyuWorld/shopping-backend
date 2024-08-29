@@ -37,13 +37,8 @@ jobs:
 
     - name: Run migrations
       run: |
-        sql-migrate up -env=production
-      env:
-        POSTGRES_HOST: localhost
-        POSTGRES_PORT: 5432
-        POSTGRES_DB: eb
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
+        sql-migrate up -config dbconfig.yml -env development
+        sql-migrate status -config dbconfig.yml -env development
 
     - name: Install tbls
       run: |
@@ -53,7 +48,7 @@ jobs:
 
     - name: Generate database documentation
       run: |
-        tbls doc postgres://postgres:postgres@localhost:5432/eb?sslmode=disable -f
+        tbls doc postgres://postgres:postgres@0.0.0.0:5432/eb?sslmode=disable -f
       
     - name: Commit documentation
       run: |
