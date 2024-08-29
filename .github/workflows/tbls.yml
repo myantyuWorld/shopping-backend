@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
+      db:
         image: postgres:15-alpine
         env:
           POSTGRES_DB: eb
@@ -48,7 +48,7 @@ jobs:
 
     - name: Generate database documentation
       run: |
-        tbls doc postgres://postgres:postgres@0.0.0.0:5432/eb?sslmode=disable -f
+        tbls doc postgres://postgres:postgres@db:5432/eb?sslmode=disable -f
       
     - name: Commit documentation
       run: |
