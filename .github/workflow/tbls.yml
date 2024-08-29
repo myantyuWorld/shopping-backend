@@ -1,0 +1,64 @@
+name: Generate Database Documentation
+
+on:
+  push:
+  #   branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: eb
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.22.5'
+
+    - name: Install sql-migrate
+      run: go install github.com/rubenv/sql-migrate/...@latest
+
+    - name: Run migrations
+      run: |
+        sql-migrate up -env=production
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
+        POSTGRES_DB: eb
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+
+    - name: Install tbls
+      run: |
+        curl -L https://git.io/tbls -o tbls
+        chmod +x tbls
+        sudo mv tbls /usr/local/bin/
+
+    - name: Generate database documentation
+      run: |
+        tbls doc postgres://postgres:postgres@localhost:5432/eb?sslmode=disable -f
+      
+    - name: Commit documentation
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/
+        git commit -m "Update database documentation" -a || echo "No changes to commit"
+        git push
