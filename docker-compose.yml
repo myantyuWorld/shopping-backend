@@ -16,12 +16,12 @@ services:
     restart: always
     container_name: eb-db
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     environment:
       TZ: Asia/Tokyo
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: eb
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     healthcheck:

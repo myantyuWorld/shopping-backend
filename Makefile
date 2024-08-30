@@ -1,12 +1,6 @@
+# 起動
 up:
 	docker-compose up -d
-
+# 停止
 down:
 	docker-compose down
-
-restart:
-	@make down
-	@make up
-
-exec-api:
-	docker-compose exec api /bin/bash
