@@ -10,7 +10,6 @@ jobs:
       checks: write
       contents: write
       pull-requests: write 
-    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     services:
       db:
