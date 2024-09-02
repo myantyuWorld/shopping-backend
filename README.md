@@ -1,6 +1,7 @@
 # Echo Clean Architecture Template
 
 ## 環境構築
+
 ```
 $ cd echo-clean-architecture
 $ docker-compose up -d --build
@@ -9,6 +10,7 @@ root@{container_id}:/go/src/app# sql-migrate up
 ```
 
 ## ディレクトリ構成
+
 ```
 .
 ├── api
@@ -74,12 +76,14 @@ root@{container_id}:/go/src/app# sql-migrate up
 ```
 
 ## 参考
-Clean Architecture　達人に学ぶソフトウェアの構造と設計
+
+Clean Architecture 　達人に学ぶソフトウェアの構造と設計
 <img width="1122" alt="image" src="https://github.com/user-attachments/assets/978b8f38-5f31-4acf-89f6-dcb56df86288">
 
+## サンプル API
 
-## サンプルAPI
 ### アカウント作成
+
 ```
 $ curl -X POST http://localhost:8080/open-account \
      -H "Content-Type: application/json" \
@@ -87,6 +91,7 @@ $ curl -X POST http://localhost:8080/open-account \
 ```
 
 ### 入金
+
 ```
 $ curl -X POST http://localhost:8080/deposit \
      -H "Content-Type: application/json" \
@@ -94,8 +99,14 @@ $ curl -X POST http://localhost:8080/deposit \
 ```
 
 ### 出金
+
 ```
 $ curl -X POST http://localhost:8080/withdraw \
      -H "Content-Type: application/json" \
      -d '{"id": 1, "amount": 1000}'
 ```
+
+## ER 図
+
+GithubActions によって自動生成を行っています
+`main`ブランチに対しての PR で動作します
