@@ -46,4 +46,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v3.0.0
         with:
           commit_message: Update redoc document
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.event.pull_request.head.ref }}
