@@ -1,0 +1,51 @@
+name: Generate Database Documentation
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  generate-docs:
+    permissions:
+      checks: write
+      contents: write
+      pull-requests: write 
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: eb
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.22.5'
+      - name: Install sql-migrate
+        run: go install github.com/rubenv/sql-migrate/...@latest
+      - name: Run migrations
+        run: |
+          sql-migrate up -config dbconfig.yml -env github
+          sql-migrate status -config dbconfig.yml -env github
+      - name: Install tbls
+        uses: k1low/setup-tbls@v1
+      - name: Generate database documentation
+        run: |
+          tbls doc --rm-dist
+
+      - uses: stefanzweifel/git-auto-commit-action@v3.0.0
+        with:
+          commit_message: Update redoc document
+          ref: ${{ github.event.pull_request.head.ref }}

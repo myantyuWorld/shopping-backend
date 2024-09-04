@@ -1,0 +1,2 @@
+dsn: postgres://postgres:postgres@localhost:5432/eb?sslmode=disable
+docPath: docs/dbdoc
