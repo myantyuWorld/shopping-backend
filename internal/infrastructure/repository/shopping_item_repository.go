@@ -15,9 +15,9 @@ type shoppingItemRepository struct {
 }
 
 // Find implements repository.IShoppingItemRepository.
-func (r *shoppingItemRepository) Find(ctx context.Context) ([]*domain.ShoppingItem, error) {
+func (r *shoppingItemRepository) FindByOwnerID(ctx context.Context, ownerID uint) ([]*domain.ShoppingItem, error) {
 	var dbItems []*dbModel.ShoppingItem
-	result := r.db.Find(&dbItems)
+	result := r.db.Order("id").Find(&dbItems, "owner_id = ?", ownerID)
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return nil, nil
@@ -61,7 +61,7 @@ func (r *shoppingItemRepository) Update(ctx context.Context, item *domain.Shoppi
 		Picked:   item.Picked,
 	}
 
-	result := r.db.Save(&dbItem)
+	result := r.db.Updates(&dbItem)
 	if result.Error != nil {
 		return result.Error
 	}

@@ -8,7 +8,7 @@ import (
 )
 
 type IShoppingItemRepository interface {
-	Find(ctx context.Context) ([]*model.ShoppingItem, error)
+	FindByOwnerID(ctx context.Context, ownerID uint) ([]*model.ShoppingItem, error)
 	Save(ctx context.Context, item *model.ShoppingItem) error
 	Update(ctx context.Context, item *model.ShoppingItem) error
 	LogicalDelete(ctx context.Context, item *model.ShoppingItem) error
