@@ -11,3 +11,11 @@ type ShoppingItem struct {
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }
+
+type Tabler interface {
+	TableName() string
+}
+
+func (s ShoppingItem) TableName() string {
+	return "shopping_items"
+}
