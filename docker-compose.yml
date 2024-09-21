@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: eb-api
+    container_name: shopping-api
     ports:
       - "8080:8080"
     volumes:
@@ -14,7 +14,7 @@ services:
   db:
     image: postgres:15-alpine
     restart: always
-    container_name: eb-db
+    container_name: shopping-db
     ports:
       - "${DB_PORT}:5432"
     environment:
