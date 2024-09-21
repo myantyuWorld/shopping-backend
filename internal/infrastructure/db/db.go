@@ -6,6 +6,7 @@ import (
 	"github.com/LeoTwins/go-clean-architecture/pkg/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func NewDB(cfg config.DBConfig) (*gorm.DB, error) {
@@ -19,6 +20,8 @@ func NewDB(cfg config.DBConfig) (*gorm.DB, error) {
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db.Logger = db.Logger.LogMode(logger.Info)
+
 	if err != nil {
 		return nil, err
 	}

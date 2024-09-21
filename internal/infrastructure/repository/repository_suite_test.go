@@ -9,6 +9,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var database *gorm.DB
@@ -25,6 +26,8 @@ var _ = BeforeSuite(func() {
 		log.Fatalf("環境変数の読み込みに失敗しました: %v", err)
 	}
 	database, err = db.NewDB(cfg.DBConfig)
+	database.Logger = database.Logger.LogMode(logger.Info)
+
 	if err != nil {
 		log.Fatalf("データベースとの接続に失敗しました: %v", err)
 	}
