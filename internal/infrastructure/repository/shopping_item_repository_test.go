@@ -65,21 +65,13 @@ var _ = Describe("ShoppingItemRepository", func() {
 			})
 			Expect(err).To(BeNil())
 		})
-		It("Update", func() {
-			res, _ := repo.FindByOwnerID(context.TODO(), 0)
-			item := res[0]
-			err := repo.Update(context.TODO(), &domainModel.ShoppingItem{
-				ID:       item.ID,
-				OwnerID:  item.OwnerID,
-				Category: item.Category,
-				Name:     "update food a",
-				Picked:   true,
-			})
+		It("Logical Delete", func() {
+			res, err := repo.FindByOwnerID(context.TODO(), 0)
+			Expect(res).NotTo(BeNil())
 			Expect(err).To(BeNil())
-			newRes, err := repo.FindByOwnerID(context.TODO(), 0)
-			Expect(newRes).NotTo(BeNil())
-			Expect(err).To(BeNil())
-			Expect(len(newRes)).To(Equal(3))
+
+			err2 := repo.LogicalDelete(context.TODO(), res[0].ID)
+			Expect(err2).To(BeNil())
 		})
 	})
 })

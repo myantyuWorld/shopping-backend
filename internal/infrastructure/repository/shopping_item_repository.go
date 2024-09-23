@@ -39,28 +39,11 @@ func (r *shoppingItemRepository) FindByOwnerID(ctx context.Context, ownerID uint
 }
 
 // LogicalDelete implements repository.IShoppingItemRepository.
-func (r *shoppingItemRepository) LogicalDelete(ctx context.Context, item *domain.ShoppingItem) error {
+func (r *shoppingItemRepository) LogicalDelete(ctx context.Context, itemID uint) error {
 	dbItem := dbModel.ShoppingItem{
-		ID:     item.ID,
-		Picked: item.Picked,
+		ID:     itemID,
+		Picked: true,
 	}
-	result := r.db.Save(&dbItem)
-	if result.Error != nil {
-		return result.Error
-	}
-	return nil
-}
-
-// Update implements repository.IShoppingItemRepository.
-func (r *shoppingItemRepository) Update(ctx context.Context, item *domain.ShoppingItem) error {
-	dbItem := dbModel.ShoppingItem{
-		ID:       item.ID,
-		OwnerID:  item.OwnerID,
-		Category: string(item.Category),
-		Name:     string(item.Name),
-		Picked:   item.Picked,
-	}
-
 	result := r.db.Updates(&dbItem)
 	if result.Error != nil {
 		return result.Error

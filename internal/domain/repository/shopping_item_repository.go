@@ -10,6 +10,5 @@ import (
 type IShoppingItemRepository interface {
 	FindByOwnerID(ctx context.Context, ownerID uint) ([]*model.ShoppingItem, error)
 	Save(ctx context.Context, item *model.ShoppingItem) error
-	Update(ctx context.Context, item *model.ShoppingItem) error
-	LogicalDelete(ctx context.Context, item *model.ShoppingItem) error
+	LogicalDelete(ctx context.Context, itemID uint) error
 }
