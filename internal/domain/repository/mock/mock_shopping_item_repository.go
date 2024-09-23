@@ -35,33 +35,33 @@ func (m *MockIShoppingItemRepository) EXPECT() *MockIShoppingItemRepositoryMockR
 	return m.recorder
 }
 
-// Find mocks base method.
-func (m *MockIShoppingItemRepository) Find(ctx context.Context) ([]*model.ShoppingItem, error) {
+// FindByOwnerID mocks base method.
+func (m *MockIShoppingItemRepository) FindByOwnerID(ctx context.Context, ownerID uint) ([]*model.ShoppingItem, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Find", ctx)
+	ret := m.ctrl.Call(m, "FindByOwnerID", ctx, ownerID)
 	ret0, _ := ret[0].([]*model.ShoppingItem)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Find indicates an expected call of Find.
-func (mr *MockIShoppingItemRepositoryMockRecorder) Find(ctx interface{}) *gomock.Call {
+// FindByOwnerID indicates an expected call of FindByOwnerID.
+func (mr *MockIShoppingItemRepositoryMockRecorder) FindByOwnerID(ctx, ownerID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Find", reflect.TypeOf((*MockIShoppingItemRepository)(nil).Find), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByOwnerID", reflect.TypeOf((*MockIShoppingItemRepository)(nil).FindByOwnerID), ctx, ownerID)
 }
 
 // LogicalDelete mocks base method.
-func (m *MockIShoppingItemRepository) LogicalDelete(ctx context.Context, item *model.ShoppingItem) error {
+func (m *MockIShoppingItemRepository) LogicalDelete(ctx context.Context, itemID uint) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LogicalDelete", ctx, item)
+	ret := m.ctrl.Call(m, "LogicalDelete", ctx, itemID)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // LogicalDelete indicates an expected call of LogicalDelete.
-func (mr *MockIShoppingItemRepositoryMockRecorder) LogicalDelete(ctx, item interface{}) *gomock.Call {
+func (mr *MockIShoppingItemRepositoryMockRecorder) LogicalDelete(ctx, itemID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LogicalDelete", reflect.TypeOf((*MockIShoppingItemRepository)(nil).LogicalDelete), ctx, item)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LogicalDelete", reflect.TypeOf((*MockIShoppingItemRepository)(nil).LogicalDelete), ctx, itemID)
 }
 
 // Save mocks base method.
@@ -76,18 +76,4 @@ func (m *MockIShoppingItemRepository) Save(ctx context.Context, item *model.Shop
 func (mr *MockIShoppingItemRepositoryMockRecorder) Save(ctx, item interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockIShoppingItemRepository)(nil).Save), ctx, item)
-}
-
-// Update mocks base method.
-func (m *MockIShoppingItemRepository) Update(ctx context.Context, item *model.ShoppingItem) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", ctx, item)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Update indicates an expected call of Update.
-func (mr *MockIShoppingItemRepositoryMockRecorder) Update(ctx, item interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockIShoppingItemRepository)(nil).Update), ctx, item)
 }
