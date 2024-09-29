@@ -26,7 +26,7 @@ func (r *shoppingItemRepository) FindByOwnerID(ctx context.Context, ownerID uint
 	}
 	var shoppingItems []*domain.ShoppingItem
 	for _, v := range dbItems {
-		shoppingItems = append(shoppingItems, domain.NewShoppingItemDb(
+		shoppingItems = append(shoppingItems, domain.ReCreate(
 			v.ID,
 			v.OwnerID,
 			v.Category,

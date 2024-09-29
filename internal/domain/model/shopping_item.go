@@ -47,7 +47,7 @@ func NewShoppingItem(ownerID uint, category string, name string) (*ShoppingItem,
 	}, nil
 }
 
-func NewShoppingItemDb(ID uint, ownerID uint, category string, name string, picked bool) *ShoppingItem {
+func ReCreate(ID uint, ownerID uint, category string, name string, picked bool) *ShoppingItem {
 	shoppingName, _ := NewShoppingName(name)
 	return &ShoppingItem{
 		ID:       ID,
